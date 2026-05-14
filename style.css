@@ -1,0 +1,140 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f4f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 90%;
+    max-width: 520px;
+    margin-bottom: 50px;
+}
+
+h1 { margin-bottom: 20px; color: #333; }
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label { text-align: left; font-size: 14px; color: #444; }
+
+input[type="file"],
+input[type="password"],
+input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover { background-color: #0056b3; }
+
+p { font-size: 14px; color: #666; }
+
+img { margin-top: 20px; max-width: 100%; }
+
+.banner {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    display: block;
+}
+
+.qr-image { margin-bottom: 20px; }
+
+.qr-image img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content { text-align: center; margin-top: 20px; }
+
+.copy-button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.copy-button:hover { background-color: #218838; }
+
+.icon-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 24px;
+    color: #007bff;
+    margin: 20px 0;
+}
+
+.icon-row i {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.icon-row i:hover {
+    transform: scale(1.2);
+    color: #0056b3;
+}
+
+.countdown-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timer-title {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.timer {
+    font-size: 24px;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    color: #666;
+    font-size: 14px;
+}

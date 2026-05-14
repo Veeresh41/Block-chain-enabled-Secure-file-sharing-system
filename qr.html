@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scan QR Code</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .blockchain-card {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #e0f7fa;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 24px;
+      text-align: left;
+      font-size: 13px;
+      word-break: break-all;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+    .blockchain-card h3 {
+      color: #4fc3f7;
+      margin: 0 0 10px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bc-row {
+      margin: 6px 0;
+      line-height: 1.5;
+    }
+    .bc-label {
+      color: #80deea;
+      font-weight: bold;
+      display: inline-block;
+      min-width: 120px;
+    }
+    .bc-value {
+      color: #e0f7fa;
+      font-family: monospace;
+      font-size: 11px;
+    }
+    .chain-valid {
+      display: inline-block;
+      background: #1b5e20;
+      color: #a5d6a7;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .explorer-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #4fc3f7;
+      text-decoration: underline;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .sha-badge {
+      background: #1a237e;
+      color: #90caf9;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-family: monospace;
+      font-size: 11px;
+      display: block;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- QR Code -->
+    <div class="qr-image">
+      <img id="qrCodeImage" src="__QR_IMAGE__" alt="QR Code" />
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <h1>Scan This QR Code</h1>
+      <p>Scan this QR code or copy the link to open it.</p>
+
+      <button class="copy-button" onclick="copyLink()">COPY LINK</button>
+
+      <div class="icon-row">
+        <i class="fas fa-share-alt" title="Share" onclick="shareQR()"></i>
+        <i class="fas fa-image" title="Download" onclick="downloadQRImage()"></i>
+        <i class="fas fa-file-pdf" title="PDF" onclick="exportAsPDF()"></i>
+        <i class="fas fa-link" title="Blockchain Explorer" onclick="window.open('/blockchain','_blank')" style="color:#4fc3f7"></i>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-container">
+        <div class="timer-title">Access Duration</div>
+        <div class="timer">
+          <span id="days">0</span> :
+          <span id="hours">00</span> :
+          <span id="minutes">00</span> :
+          <span id="seconds">00</span>
+        </div>
+        <div class="labels">
+          <span>Days</span>
+          <span>Hours</span>
+          <span>Min.</span>
+          <span>Sec.</span>
+        </div>
+      </div>
+
+      <!-- ✅ Blockchain + SHA Info Card -->
+      <div class="blockchain-card">
+        <h3>🔗 Blockchain Record</h3>
+
+        <div class="bc-row">
+          <span class="bc-label">Block #</span>
+          <span class="bc-value">__BLOCK_INDEX__</span>
+        </div>
+
+        <div class="bc-row">
+          <span class="bc-label">Block Hash</span>
+          <span class="sha-badge">__BLOCK_HASH__</span>
+        </div>
+
+        <div class="bc-row">
+          <span class="bc-label">File SHA-256</span>
+          <span class="sha-badge">__ORIGINAL_SHA256__</span>
+        </div>
+
+        <div class="bc-row">
+          <span class="bc-label">Chain Status</span>
+          <span class="chain-valid">__CHAIN_VALID__</span>
+        </div>
+
+        <a class="explorer-link" onclick="window.open('/blockchain','_blank')">
+          🔍 Open Blockchain Explorer →
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const link = "__QR_LINK__";
+    const accessSeconds = parseInt('__ACCESS_SECONDS__');
+
+    function copyLink() {
+      navigator.clipboard.writeText(link).then(() => alert("✅ Link copied!"));
+    }
+
+    function shareQR() {
+      const img = document.getElementById("qrCodeImage");
+      fetch(img.src)
+        .then(res => res.blob())
+        .then(blob => {
+          const file = new File([blob], "qr-code.png", { type: blob.type });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file], title: "QR Code", text: "Scan this QR", url: link });
+          } else if (navigator.share) {
+            navigator.share({ title: "QR Link", text: "Open this link", url: link });
+          } else {
+            alert("Sharing not supported");
+          }
+        });
+    }
+
+    function downloadQRImage() {
+      const img = document.getElementById("qrCodeImage");
+      const a = document.createElement("a");
+      a.href = img.src;
+      a.download = "qr-code.png";
+      a.click();
+    }
+
+    function exportAsPDF() {
+      const img = document.getElementById("qrCodeImage");
+      const win = window.open("");
+      win.document.write(`
+        <h2>Secure QR Code</h2>
+        <img src="${img.src}" width="300"/>
+        <p>${link}</p>
+        <p>Block Hash: __BLOCK_HASH__</p>
+        <p>SHA-256: __ORIGINAL_SHA256__</p>
+      `);
+      win.print();
+    }
+
+    // Countdown Timer
+    let countdown = accessSeconds;
+    const days = document.getElementById("days");
+    const hours = document.getElementById("hours");
+    const minutes = document.getElementById("minutes");
+    const seconds = document.getElementById("seconds");
+
+    function updateCountdown() {
+      if (countdown <= 0) {
+        document.querySelector(".container").innerHTML =
+          "<h2 style='text-align:center'>⏳ QR Code Expired</h2>";
+        return;
+      }
+      let d = Math.floor(countdown / 86400);
+      let h = Math.floor((countdown % 86400) / 3600);
+      let m = Math.floor((countdown % 3600) / 60);
+      let s = countdown % 60;
+      days.textContent = d;
+      hours.textContent = String(h).padStart(2, '0');
+      minutes.textContent = String(m).padStart(2, '0');
+      seconds.textContent = String(s).padStart(2, '0');
+      countdown--;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>

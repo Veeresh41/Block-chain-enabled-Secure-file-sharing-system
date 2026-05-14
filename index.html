@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Secret File Sharing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .blockchain-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #0f2027, #2c5364);
+      color: #4fc3f7;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      cursor: pointer;
+      border: 1px solid #4fc3f7;
+      text-decoration: none;
+    }
+    .blockchain-badge:hover { opacity: 0.85; }
+    .sha-note {
+      font-size: 12px;
+      color: #888;
+      background: #f0f4ff;
+      border-left: 3px solid #007bff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-top: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <h1>🔐 Secure File Sharing</h1>
+    <img src="images/banner.jpeg" alt="Secure File" class="banner" onerror="this.style.display='none'">
+
+    <!-- Blockchain Explorer link -->
+    <a class="blockchain-badge" href="/blockchain" target="_blank">
+      🔗 View Blockchain Explorer
+    </a>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <label for="file"><strong>Choose a file to encrypt:</strong></label>
+      <input type="file" name="file" id="file" required>
+
+      <label for="password"><strong>Enter secret key:</strong></label>
+      <input type="password" name="password" id="password" placeholder="Secret Key" required>
+
+      <label>
+        Max Downloads:
+        <input type="number" name="maxDownloads" min="1" value="1" required>
+      </label>
+      <label>
+        Access Time (minutes):
+        <input type="number" name="accessMinutes" min="1" value="10" required>
+      </label>
+
+      <button type="submit">🔒 Encrypt & Generate QR</button>
+    </form>
+
+    <div class="sha-note">
+      🛡️ <strong>SHA-256</strong> fingerprint of your file is recorded on a <strong>blockchain</strong> at upload time.
+      Any tampering with the file before download is automatically detected.
+    </div>
+
+    <p>Note: You will need this key to decrypt the file after scanning the QR code.</p>
+  </div>
+</body>
+</html>
